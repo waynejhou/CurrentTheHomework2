@@ -6,7 +6,71 @@
         xmlns:local="clr-namespace:CurrentTheHomework2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Border DockPanel.Dock="Left" Width="200">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Button Width="50" Content="^" Click="CdSpaceDotDOt_Click"/>
+                        <!--
+                        <Button Content="&lt;-" Click="CdSpaceMinus1_Click"/>
+                        <Button Content="-&gt;" Click="CdSpacePlus1_Click"/>-->
+                    </StackPanel>
+                    <ComboBox Grid.Column="1" x:Name="_ChangeDisk" SelectionChanged="ChangeDisk_SelectionChanged"/>
+                </Grid>
+                <UniformGrid Grid.Row="1" Columns="1">
+                    <TextBox x:Name="_pwd" IsReadOnly="True"/>
+                    <TextBox x:Name="_cmd"/>
+                    <Button Content="execute" Click="Execute_Click"/>
+                </UniformGrid>
+                <ListView Grid.Row="2" x:Name="_ls" MouseDoubleClick="Ls_MouseDoubleClick">
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="border">
+                                <TextBlock Text="{Binding}"/>
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsDirectory}" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#FFCC99"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+        <Border>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TextBox x:Name="Source" FontFamily="Consolas" FontSize="15">
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Big5" Click="ChangeToBig5_Click"/>
+                            <MenuItem Header="Utf8" Click="ChangeToUtf8_Click"/>
+                            <MenuItem Header="Save as b.cpp" Click="Save_Click"/>
+                            <MenuItem Header="Save as bclass.h" Click="SaveHeader_Click"/>
+                            <MenuItem Header="Save as bclass.cpp" Click="SaveClass_Click"/>
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
+            </ScrollViewer>
+
+        </Border>
+    </DockPanel>
 </Window>
